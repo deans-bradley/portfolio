@@ -6,11 +6,11 @@ A personal portfolio website showcasing projects, skills, and professional exper
 
 This project consists of three main components:
 
-| Component | Description | Port |
-|-----------|-------------|------|
-| **Website** | Public portfolio site at [deansbrad.com](https://deansbrad.com) | 5500 |
-| **Admin Dashboard** | Content management interface | 5501 |
-| **API** | RESTful backend service | 3000 |
+| Component           | Description                                                     | Port |
+|---------------------|-----------------------------------------------------------------|------|
+| **Website**         | Public portfolio site at [deansbrad.com](https://deansbrad.com) | 5500 |
+| **Admin Dashboard** | Content management interface                                    | 5501 |
+| **API**             | RESTful backend service                                         | 3000 |
 
 ## Features
 
@@ -39,12 +39,12 @@ This project consists of three main components:
 
 ## Tech Stack
 
-| Layer | Technologies |
-|-------|--------------|
-| **Frontend** | HTML5, CSS3, JavaScript (ES Modules), jQuery |
-| **Backend** | Node.js, Express 5 |
-| **Database** | MongoDB (Mongoose ODM) |
-| **Security** | JWT, bcrypt, Helmet, CORS, Rate Limiting |
+| Layer        | Technologies                                  |
+|--------------|-----------------------------------------------|
+| **Frontend** | HTML5, CSS3, JavaScript (ES Modules), jQuery  |
+| **Backend**  | Node.js, Express 5                            |
+| **Database** | MongoDB (Mongoose ODM)                        |
+| **Security** | JWT, bcrypt, Helmet, CORS, Rate Limiting      |
 | **Services** | Nodemailer (email), Sharp (images), basic-ftp |
 
 ## Project Structure
@@ -148,16 +148,16 @@ npx http-server . -p 5501 -c-1
 
 ## API Endpoints
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET` | `/v1/` | API status |
-| `GET` | `/v1/health` | Health check |
-| `POST` | `/v1/auth/login` | User authentication |
-| `GET` | `/v1/projects` | List projects |
-| `POST` | `/v1/projects` | Create project (auth) |
-| `GET` | `/v1/testimonial` | List testimonials |
-| `POST` | `/v1/testimonial` | Submit testimonial |
-| `GET` | `/v1/logs` | View logs (auth) |
+| Method | Endpoint          | Description           |
+|--------|-------------------|-----------------------|
+| `GET`  | `/v1/`            | API status            |
+| `GET`  | `/v1/health`      | Health check          |
+| `POST` | `/v1/auth/login`  | User authentication   |
+| `GET`  | `/v1/projects`    | List projects         |
+| `POST` | `/v1/projects`    | Create project (auth) |
+| `GET`  | `/v1/testimonial` | List testimonials     |
+| `POST` | `/v1/testimonial` | Submit testimonial    |
+| `GET`  | `/v1/logs`        | View logs (auth)      |
 
 ## License
 
