@@ -241,7 +241,7 @@ export class ProjectsComponent extends Component {
           ? `<img src="${this.escapeHtml(project.previewImageUrl)}" alt="${this.escapeHtml(project.name)}" style="max-width: 100%; height: auto; margin-bottom: 1rem;" />`
           : ''
         }
-        <p>${this.escapeHtml(project.description)}</p>
+        <p>${this.truncateDescription(project.description)}</p>
         <p><strong>Tech Stack:</strong> ${techStackHtml}</p>
         ${project.repoUrl 
           ? `<p><strong>Repo:</strong> <a href="${this.escapeHtml(project.repoUrl)}" target="_blank" rel="noopener">${this.escapeHtml(project.repoUrl)}</a></p>`
@@ -356,13 +356,24 @@ export class ProjectsComponent extends Component {
     };
 
     // For edit without new image, use existing URL
-    if (this.editingProject && !formData.previewImageBase64) {
+    const isEdit = !!this.editingProject;
+    const hasNewImage = !!formData.previewImageBase64;
+    
+    if (isEdit && !hasNewImage) {
       formData.previewImageBase64 = this.editingProject.previewImageUrl;
     }
 
-    // Validate using CreateProject model
+    // Validate using CreateProject model, but skip image validation for edits without new images
     const createProject = new CreateProject(formData);
     const validation = createProject.validate();
+
+    // For edits without new images, remove image validation errors
+    if (isEdit && !hasNewImage && !validation.isValid) {
+      if (validation.errors.previewImageBase64) {
+        delete validation.errors.previewImageBase64;
+        validation.isValid = Object.keys(validation.errors).length === 0;
+      }
+    }
 
     if (!validation.isValid) {
       const errorMessages = Object.values(validation.errors).join('. ');
@@ -438,6 +449,20 @@ export class ProjectsComponent extends Component {
       this.processingIds.delete(id);
       this.render();
     }
+  }
+
+  /**
+   * Truncate description to show max 2 lines (~120 characters)
+   * @param {string} description
+   * @returns {string}
+   */
+  truncateDescription(description) {
+    if (!description) return '';
+    const maxLength = 120;
+    if (description.length <= maxLength) {
+      return this.escapeHtml(description);
+    }
+    return this.escapeHtml(description.substring(0, maxLength).trim() + '...');
   }
 
   /**
