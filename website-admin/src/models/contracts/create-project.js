@@ -105,8 +105,8 @@ class CreateProject {
       return 'Project description is required';
     }
 
-    if (this.description.length > 500) {
-      return 'Project description cannot exceed 500 characters';
+    if (this.description.length > 2000) {
+      return 'Project description cannot exceed 2000 characters';
     }
 
     return null;
