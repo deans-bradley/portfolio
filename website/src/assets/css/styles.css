@@ -461,6 +461,91 @@ body {
     margin-bottom: 0;
 }
 
+/* HTML elements styling within project descriptions */
+.project-details-description strong,
+.project-details-description b {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.project-details-description i,
+.project-details-description em {
+    font-style: italic;
+    color: var(--color-text);
+}
+
+.project-details-description ul,
+.project-details-description ol {
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+    color: var(--color-accent);
+}
+
+.project-details-description li {
+    margin-bottom: 0.5rem;
+    line-height: 1.6;
+}
+
+.project-details-description li:last-child {
+    margin-bottom: 0;
+}
+
+.project-details-description ul li {
+    list-style-type: disc;
+}
+
+.project-details-description ol li {
+    list-style-type: decimal;
+}
+
+.project-details-description h4,
+.project-details-description h5,
+.project-details-description h6 {
+    color: var(--color-text);
+    font-weight: 600;
+    margin: 1rem 0 0.5rem 0;
+    line-height: 1.4;
+}
+
+.project-details-description h4 {
+    font-size: 1.1rem;
+}
+
+.project-details-description h5 {
+    font-size: 1rem;
+}
+
+.project-details-description h6 {
+    font-size: 0.9rem;
+}
+
+.project-details-description a {
+    color: var(--color-primary);
+    text-decoration: underline;
+    transition: color var(--transition-speed) ease;
+}
+
+.project-details-description a:hover {
+    color: var(--color-accent);
+}
+
+.project-details-description code {
+    background-color: var(--color-accent);
+    color: var(--color-background);
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+}
+
+.project-details-description blockquote {
+    border-left: 3px solid var(--color-accent);
+    margin: 1rem 0;
+    padding: 0.5rem 0 0.5rem 1rem;
+    background-color: rgba(74, 74, 72, 0.1);
+    font-style: italic;
+}
+
 .project-repo-link {
     display: inline-flex;
     align-items: center;
@@ -468,16 +553,26 @@ body {
     margin-top: 1.5rem;
     padding: 0.75rem 1.25rem;
     background-color: var(--color-primary);
-    color: var(--color-background);
+    color: var(--color-secondary);
     border-radius: 8px;
     font-weight: 600;
     font-size: 0.95rem;
+    text-decoration: none;
     transition: all var(--transition-speed) ease;
 }
 
 .project-repo-link:hover {
     background-color: var(--color-text);
     transform: translateY(-2px);
+}
+
+[data-theme="dark"] .project-repo-link {
+    background-color: var(--color-secondary);
+    color: var(--color-primary);
+}
+
+[data-theme="dark"] .project-repo-link:hover {
+    background-color: var(--color-accent);
 }
 
 .project-repo-link svg {
