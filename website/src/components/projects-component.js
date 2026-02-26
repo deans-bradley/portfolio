@@ -152,7 +152,7 @@ export class ProjectsComponent extends Component {
               ${techStackHtml}
             </div>
             <div class="project-details-description">
-              <p>${this.escapeHtml(project.description)}</p>
+              ${project.description || '<p>No description available.</p>'}
             </div>
             ${repoLinkHtml}
           </div>
