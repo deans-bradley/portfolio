@@ -184,7 +184,7 @@ export const projectUpdateValidation = [
     .isLength({ max: 50 })
     .withMessage('Project owner name cannot exceed 50 characters'),
   body('previewImageBase64')
-    .optional()
+    .optional({ values: 'falsy' })
     .matches(/^data:image\/(png|jpeg|jpg|gif|webp);base64,/)
     .withMessage('Preview image must be a valid base64 image string'),
   body('techStack')
