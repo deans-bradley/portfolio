@@ -8,6 +8,7 @@ import mongoose from 'mongoose';
  * @property {Array<string>} techStack - The tech stack used to create the project
  * @property {string} description - The project description
  * @property {string} [repoUrl] - The remote repository URL if available
+ * @property {number} order - The display order for the project (positive integer)
  */
 
 /**
@@ -64,6 +65,17 @@ const projectSchema = new mongoose.Schema({
         return /^https?:\/\/(www\.)?github\.com\/.+\/.+/.test(v);
       },
       message: 'Repository URL must be a valid GitHub repository URL'
+    }
+  },
+  order: {
+    type: Number,
+    required: [true, 'Display order is required'],
+    min: [1, 'Order must be a positive number'],
+    validate: {
+      validator: function(v) {
+        return Number.isInteger(v) && v > 0;
+      },
+      message: 'Order must be a positive integer'
     }
   }
 }, {
