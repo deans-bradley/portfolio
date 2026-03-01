@@ -23,15 +23,18 @@ class CreateProject {
   /**
    * Create a new CreateProjectData instance
    * @param {CreateProjectData} data - The create project data
+   * @param {boolean} [isEdit=false] - Whether this is an edit operation (makes previewImageBase64 optional)
    */
-  constructor(data = {}) {
+  constructor(data = {}, isEdit = false) {
     this.name = data.name.trim();
     this.owner = data.owner?.trim();
-    this.previewImageBase64 = data.previewImageBase64.trim();
+    this.previewImageBase64 = data.previewImageBase64?.trim() || '';
     this.techStack = data.techStack;
     this.description = data.description.trim() || '';
     this.repoUrl = data.repoUrl?.trim() || '';
     this.order = data.order;
+    /** @type {boolean} */
+    this.isEdit = isEdit;
   }
 
   /**
@@ -72,7 +75,7 @@ class CreateProject {
    */
   validateBase64Image() {
     if (!this.previewImageBase64) {
-      return 'Project preview image is required';
+      return this.isEdit ? null : 'Project preview image is required';
     }
 
     if (!BASE64_IMAGE_REGEX.test(this.previewImageBase64)) {
@@ -178,15 +181,20 @@ class CreateProject {
    * @returns {CreateProjectData} Plain object representation
    */
   toJSON() {
-    return {
+    const json = {
       name: this.name,
       owner: this.owner,
-      previewImageBase64: this.previewImageBase64,
       techStack: this.techStack,
       description: this.description,
       repoUrl: this.repoUrl,
       order: this.order
     };
+
+    if (this.previewImageBase64) {
+      json.previewImageBase64 = this.previewImageBase64;
+    }
+
+    return json;
   }
 
   /**
