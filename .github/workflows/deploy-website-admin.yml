@@ -1,0 +1,27 @@
+name: Deploy Website Admin
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "website-admin/**"
+
+jobs:
+  deploy:
+    name: Deploy Website Admin to admin.deansbrad.com
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy via FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.ADMIN_FTP_SERVER }}
+          username: ${{ secrets.ADMIN_FTP_USERNAME }}
+          password: ${{ secrets.ADMIN_FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: ./website-admin/
+          server-dir: /public_html/
