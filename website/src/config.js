@@ -37,7 +37,7 @@ function getApiConfig(env) {
       accessControl: "*"
     },
     production: {
-      baseApiUrl: 'htttps://api.deansbrad.com',
+      baseApiUrl: 'https://portfolio-yo6b.onrender.com',
       apiVersion: 1,
       accessControl: window.location.origin
     }
