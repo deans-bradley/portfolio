@@ -8,6 +8,7 @@
  * @property {Array<string>} techStack - The tech stack used to create the project
  * @property {string} description - The project description
  * @property {string} [repoUrl] - The remote repository URL if available
+ * @property {number} order - The display order for the project
  */
 
 /**
@@ -30,6 +31,7 @@ class CreateProject {
     this.techStack = data.techStack;
     this.description = data.description.trim() || '';
     this.repoUrl = data.repoUrl?.trim() || '';
+    this.order = data.order;
   }
 
   /**
@@ -113,6 +115,22 @@ class CreateProject {
   }
 
   /**
+   * Validate project order
+   * @returns {string|null} Error message or null if valid
+   */
+  validateOrder() {
+    if (this.order == null) {
+      return 'Project display order is required';
+    }
+
+    if (typeof this.order !== 'number' || !Number.isInteger(this.order) || this.order < 1) {
+      return 'Project order must be a positive integer';
+    }
+
+    return null;
+  }
+
+  /**
    * Validate all fields and return validation result
    * @returns {ValidationResult} Validation result with errors
    */
@@ -144,6 +162,11 @@ class CreateProject {
       errors.description = descriptionError;
     }
 
+    const orderError = this.validateOrder();
+    if (orderError) {
+      errors.order = orderError;
+    }
+
     return {
       isValid: Object.keys(errors).length === 0,
       errors,
@@ -161,7 +184,8 @@ class CreateProject {
       previewImageBase64: this.previewImageBase64,
       techStack: this.techStack,
       description: this.description,
-      repoUrl: this.repoUrl
+      repoUrl: this.repoUrl,
+      order: this.order
     };
   }
 
