@@ -9,6 +9,7 @@ import ftpService from './ftp-service.js';
  * @property {Array<string>} techStack - The tech stack used to create the project
  * @property {string} description - The project description
  * @property {string} [repoUrl] - The remote repository URL if available
+ * @property {number} order - The display order for the project
  */
 
 /**
@@ -20,6 +21,7 @@ import ftpService from './ftp-service.js';
  * @property {Array<string>} techStack - The tech stack used to create the project
  * @property {string} description - The project description
  * @property {string} [repoUrl] - The remote repository URL if available
+ * @property {number} order - The display order for the project
  * @property {Date} createdAt - Creation timestamp
  * @property {Date} updatedAt - Update timestamp
  */
@@ -39,7 +41,7 @@ class ProjectService {
    */
   async createProject(projectData) {
     try {
-      const { name, owner, previewImageBase64, techStack, description, repoUrl } = projectData;
+      const { name, owner, previewImageBase64, techStack, description, repoUrl, order } = projectData;
     
       const uploadResult = await ftpService.uploadFromBase64(previewImageBase64);
       
@@ -55,7 +57,8 @@ class ProjectService {
         previewImageUrl,
         techStack,
         description,
-        repoUrl
+        repoUrl,
+        order
       });
 
       await project.save();
@@ -69,14 +72,14 @@ class ProjectService {
   }
 
   /**
-   * Retrieves all projects sorted by creation date (newest first).
+   * Retrieves all projects sorted by display order (ascending).
    * @async
    * @returns {Promise<Array<ProjectDocument>>} Array of projects
    */
   async getProjects() {
     const projects = await Project.find()
       .select('-__v')
-      .sort({ createdAt: -1 });
+      .sort({ order: 1 });
 
     return projects;
   }
@@ -108,7 +111,7 @@ class ProjectService {
         throw new Error('Project not found');
       }
 
-      const { name, owner, previewImageBase64, techStack, description, repoUrl } = updateData;
+      const { name, owner, previewImageBase64, techStack, description, repoUrl, order } = updateData;
 
       // Handle image update if new image provided
       if (previewImageBase64) {
@@ -132,6 +135,7 @@ class ProjectService {
       if (techStack !== undefined) existingProject.techStack = techStack;
       if (description !== undefined) existingProject.description = description;
       if (repoUrl !== undefined) existingProject.repoUrl = repoUrl;
+      if (order !== undefined) existingProject.order = order;
 
       await existingProject.save();
 

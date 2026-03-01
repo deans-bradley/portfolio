@@ -29,7 +29,7 @@ const handleValidationErrors = (req, res, next) => {
 // @access  Admin only
 router.post('/', authenticate, adminOnly, projectValidation, handleValidationErrors, async (req, res) => {
   try {
-    const { name, owner, previewImageBase64, techStack, description, repoUrl } = req.body;
+    const { name, owner, previewImageBase64, techStack, description, repoUrl, order } = req.body;
 
     await projectService.createProject({
       name,
@@ -37,7 +37,8 @@ router.post('/', authenticate, adminOnly, projectValidation, handleValidationErr
       previewImageBase64,
       techStack,
       description,
-      repoUrl
+      repoUrl,
+      order
     });
 
     res.status(201).json({
@@ -104,7 +105,7 @@ router.get('/:id', authenticate, adminOnly, async (req, res) => {
 // @access  Admin only
 router.put('/:id', authenticate, adminOnly, projectUpdateValidation, handleValidationErrors, async (req, res) => {
   try {
-    const { name, owner, previewImageBase64, techStack, description, repoUrl } = req.body;
+    const { name, owner, previewImageBase64, techStack, description, repoUrl, order } = req.body;
 
     const result = await projectService.updateProject(req.params.id, {
       name,
@@ -112,7 +113,8 @@ router.put('/:id', authenticate, adminOnly, projectUpdateValidation, handleValid
       previewImageBase64,
       techStack,
       description,
-      repoUrl
+      repoUrl,
+      order
     });
 
     res.status(200).json({

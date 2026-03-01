@@ -117,7 +117,7 @@ export const testimonialValidation = [
 
 /**
  * Validation rules for project creation endpoint.
- * Validates required fields (name, owner, previewImageBase64, techStack, description)
+ * Validates required fields (name, owner, previewImageBase64, techStack, description, order)
  * and optional repoUrl field.
  * @type {Array<ValidationChain>}
  * @constant
@@ -151,6 +151,11 @@ export const projectValidation = [
     .trim()
     .notEmpty()
     .withMessage('Project description is required'),
+  body('order')
+    .notEmpty()
+    .withMessage('Display order is required')
+    .isInt({ min: 1 })
+    .withMessage('Display order must be a positive integer'),
   body('repoUrl')
     .optional({ values: 'falsy' })
     .isURL()
@@ -196,6 +201,10 @@ export const projectUpdateValidation = [
     .trim()
     .notEmpty()
     .withMessage('Project description cannot be empty'),
+  body('order')
+    .optional()
+    .isInt({ min: 1 })
+    .withMessage('Display order must be a positive integer'),
   body('repoUrl')
     .optional({ values: 'falsy' })
     .isURL()

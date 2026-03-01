@@ -7,6 +7,7 @@
  * @property {string[]} techStack
  * @property {string} description
  * @property {string} [repoUrl]
+ * @property {number} order
  * @property {string} createdAt
  * @property {string} updatedAt
  */
@@ -24,6 +25,7 @@ class Project {
     this.techStack = data.techStack || [];
     this.description = data.description;
     this.repoUrl = data.repoUrl;
+    this.order = data.order;
     this.createdAt = data.createdAt;
     this.updatedAt = data.updatedAt;
   }
@@ -65,6 +67,10 @@ class Project {
       throw new Error('Repo URL is not a valid string');
     }
 
+    if (this.order == null || typeof this.order !== 'number') {
+      throw new Error('Order is not a valid number');
+    }
+
     if (this.createdAt && typeof this.createdAt !== 'string') {
       throw new Error('Created at is not a valid string');
     }
@@ -87,6 +93,7 @@ class Project {
       techStack: this.techStack,
       description: this.description,
       repoUrl: this.repoUrl,
+      order: this.order,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt
     };

@@ -188,6 +188,20 @@ export class ProjectsComponent extends Component {
             />
           </label>
           
+          <label for="order">
+            Display Order *
+            <input 
+              type="number" 
+              id="order" 
+              name="order" 
+              value="${isEdit ? project.order || '' : ''}"
+              placeholder="Enter display order (1, 2, 3...)"
+              min="1"
+              required
+            />
+            <small>Lower numbers will display first</small>
+          </label>
+          
           <label for="preview-image-input">
             Preview Image *
             <input 
@@ -248,7 +262,7 @@ export class ProjectsComponent extends Component {
           : ''
         }
         <footer>
-          <small>Created: ${new Date(project.createdAt).toLocaleDateString()}</small>
+          <small>Order: ${project.order} | Created: ${new Date(project.createdAt).toLocaleDateString()}</small>
           <div role="group">
             <button 
               class="edit-btn outline" 
@@ -352,6 +366,7 @@ export class ProjectsComponent extends Component {
       description: $form.find('#description').val(),
       techStack: $form.find('#techStack').val().split(',').map(s => s.trim()).filter(Boolean),
       repoUrl: $form.find('#repoUrl').val() || '',
+      order: parseInt($form.find('#order').val()) || 1,
       previewImageBase64: $form.find('#previewImageBase64').val()
     };
 
