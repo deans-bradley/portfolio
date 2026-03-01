@@ -1,0 +1,27 @@
+name: Deploy Website
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "website/**"
+
+jobs:
+  deploy:
+    name: Deploy Website to deansbrad.com
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy via FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.WEBSITE_FTP_SERVER }}
+          username: ${{ secrets.WEBSITE_FTP_USERNAME }}
+          password: ${{ secrets.WEBSITE_FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: ./website/
+          server-dir: /public_html/
