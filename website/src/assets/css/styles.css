@@ -520,7 +520,7 @@ body {
 }
 
 .project-details-description a {
-    color: var(--color-primary);
+    color: var(--color-secondary);
     text-decoration: underline;
     transition: color var(--transition-speed) ease;
 }
