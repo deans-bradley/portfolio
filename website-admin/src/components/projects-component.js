@@ -217,7 +217,7 @@ export class ProjectsComponent extends Component {
               : ''
             }
           </div>
-          <input type="hidden" id="previewImageBase64" name="previewImageBase64" value="" />
+          <input type="hidden" id="preview-image-base64" name="preview-image-base64" value="" />
           
           <div id="form-error"></div>
           
@@ -338,7 +338,7 @@ export class ProjectsComponent extends Component {
     const reader = new FileReader();
     reader.onload = (event) => {
       const base64 = event.target.result;
-      this.elements.formContainer.find('#previewImageBase64').val(base64);
+      this.elements.formContainer.find('#preview-image-base64').val(base64);
       this.elements.formContainer.find('#image-preview').html(
         `<img src="${base64}" alt="Preview" style="max-width: 200px; margin: 1rem 0;" />`
       );
@@ -367,28 +367,12 @@ export class ProjectsComponent extends Component {
       techStack: $form.find('#techStack').val().split(',').map(s => s.trim()).filter(Boolean),
       repoUrl: $form.find('#repoUrl').val() || '',
       order: parseInt($form.find('#order').val()) || 1,
-      previewImageBase64: $form.find('#previewImageBase64').val()
+      previewImageBase64: $form.find('#preview-image-base64').val()
     };
 
-    // For edit without new image, use existing URL
     const isEdit = !!this.editingProject;
-    const hasNewImage = !!formData.previewImageBase64;
-    
-    if (isEdit && !hasNewImage) {
-      formData.previewImageBase64 = this.editingProject.previewImageUrl;
-    }
-
-    // Validate using CreateProject model, but skip image validation for edits without new images
-    const createProject = new CreateProject(formData);
+    const createProject = new CreateProject(formData, isEdit);
     const validation = createProject.validate();
-
-    // For edits without new images, remove image validation errors
-    if (isEdit && !hasNewImage && !validation.isValid) {
-      if (validation.errors.previewImageBase64) {
-        delete validation.errors.previewImageBase64;
-        validation.isValid = Object.keys(validation.errors).length === 0;
-      }
-    }
 
     if (!validation.isValid) {
       const errorMessages = Object.values(validation.errors).join('. ');
