@@ -1,3 +1,4 @@
+import dns from 'dns';
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
@@ -10,6 +11,9 @@ import testimonialRoutes from './endpoints/testimonial.js';
 import projectRoutes from './endpoints/project.js';
 import logRoutes from './endpoints/log.js';
 import healthRoutes from './endpoints/health.js';
+
+// Use Google DNS to resolve SRV records (fixes Node.js c-ares lookup failures on some networks)
+dns.setServers(['8.8.8.8', '8.8.4.4']);
 
 const app = express();
 
